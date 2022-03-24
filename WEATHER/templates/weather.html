@@ -1,0 +1,104 @@
+
+{% load static %}
+
+<section>
+    <div class="container p-3" style="background-color: #d9e4dc">
+            {% block header %}
+                {% include 'include/header.html' %}
+            {% endblock header %}
+    </div>
+</section>
+<body>
+<section>
+    <div class="container pt-3 pb-3" style="background-color: #d9e4dc">
+        <section>
+            <div class="container pt-3 pb-3" style="background-color: #e9f7fa">
+                <div class="row">
+                    <div class="col-6" style="min-height: 100px">
+                        <center><a href="/weather"><img class="rounded" src="{% static 'img/logo.png' %}"></a></center>
+                    </div>
+                    <div class="col-6" style="min-height: 100px">
+                        <h1>Блок прогноза погоды</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container pt-3">
+                <div class="row" style="background-color: #e9f7fa">
+                    <div class="col-6" style="text-center">
+                        <h3>Для выбора города воспользуйтесь поиском</h3>
+                    </div>
+                    <div class="col-6 text-center">
+                        <form method="GET" action="">
+                            {% csrf_token %}
+                            <label>Enter City</label>
+                            {{ form }}
+                            <input type="submit" value="Поиск">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container pt-3 pb-3">
+                <div class="row" style="min-height:300px; background-color: #e9f7fa">
+                    <div class="col-4">
+                        <p></p>
+                        <div>Для города: <b style="text-transform: capitalize">{{ city }}</b>
+                            <b><img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image"></b>
+                                <p></p>
+                            <iframe src="{{ response_icon | safe }}" style="background-color: #e0fcf4"></iframe>
+                                <p></p>
+                                <b>
+                                Подробный прогноз:
+                                </b>
+                                <p></p>
+                            Координаты города: <b>{{ coord_lan }} * {{ coord_lat }}</b>
+                                <p></p>
+                            Температура воздуха состовляет: <b>{{ temp }} °C</b>
+                                <p></p>
+                            Ощущается как: <b>{{ feels }} °C</b>
+                                <p></p>
+                            Минимальная тепература: <b>{{ min_t }} °C</b>
+                                <p></p>
+                            Максимальная тепература: <b>{{ max_t }} °C</b>
+                                <p></p>
+                            Облачность: <b>{{ weather_0 }}</b>
+                                <p></p>
+                            Погода: <b>{{ weather_1 }}</b>
+                                <p></p>
+                            Давление: <b>{{ pressure }} hpa</b>
+                                <p></p>
+                            Влажность: <b>{{ humidity }} % </b>
+                                <p></p>
+                            Видимость состовляет: <b>{{ visibility }} метров</b>
+                                <p></p>
+                            Скорость ветра состовляет: <b>{{ wind_s }} м/с</b>
+                                <p></p>
+                            Направление ветра: <b>{{ wind_d }}</b>
+                                <p></p>
+                            Восход солнца: <b>{{ sunrise }}</b>
+                                <p></p>
+                            Закат солнца: <b>{{ sunset }}</b>
+                                <p></p>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <iframe src="{{ img_city | safe }}" style="width:450px; height:650px; margin:90px;text-align:center;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container p-3" style="background-color: #e9f7fa">
+                <div class="row">
+                    {% block footer %}
+                        {% include 'include/footer.html' %}
+                    {% endblock footer %}
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+</body>

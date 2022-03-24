@@ -1,0 +1,103 @@
+
+{% load static %}
+
+<section>
+    <div class="container p-3" style="background-color: #d9e4dc">
+            {% block header %}
+                {% include 'include/header.html' %}
+            {% endblock header %}
+    </div>
+</section>
+<body>
+<section>
+    <div class="container pt-3 pb-3" style="background-color: #d9e4dc">
+        <section>
+            <div class="container pt-3 pb-3" style="background-color: #e9f7fa">
+                <div class="row">
+                    <div class="col-6" style="min-height: 100px">
+                        <center><a href="/news"><img class="rounded" src="{% static 'img/news_logo.png' %}"></a></center>
+                    </div>
+                    <div class="col-6" style="min-height: 100px">
+                        <h1>Блок новостей</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container pt-3 pb-3">
+                <div class="row" style="background-color: #e9f7fa">
+                    <div class="container pt-3">
+                        {% for page in page_obj %}
+                            <a href="?id={{ page.pk }}">{{ page.title }}</a>
+                            <p></p>
+                            <div>Автор статьи: {{ page.author.first_name }} {{ page.author.last_name }}</div>
+                            <div>Добавлена: {{ page.created }}</div>
+                            <p></p>
+                            <div>{{ page.text | truncatewords:30 }}</div>
+                            <hr>
+                        {% endfor %}
+                        {% if page_obj %}
+                            <div class="pagination">
+                                <span class="page-links">
+                                    {% if page_obj.has_previous %}
+                                        <a style="font-size: 20px" href="?page=1">1&laquo;</a>
+                                        <a style="color: red; font-size: 20px" href="?page={{ page_obj.previous_page_number }}"><<<</a>
+                                    {% endif %}
+                                    <span class="page-current">
+                                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                                    </span>
+                                    {% if page_obj.has_next %}
+                                        <a style="color: red; font-size: 20px" href="?page={{ page_obj.next_page_number }}">>>></a>
+                                        <a style="font-size: 20px" href="?page={{ page_obj.paginator.num_pages }}">&raquo;{{ page_obj.paginator.num_pages }}</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="container pt-3">
+                        {% if page %}
+                            <b>{{ page.title }}</b>
+                            <p></p>
+                            <div>Автор статьи: {{ page.author.first_name }} {{ page.author.last_name }}</div>
+                            <div>Добавлена: {{ page.created }}</div>
+                            <p></p>
+                            <div>{{ page.text }}</div>
+                            {% if request.user.is_authenticated %}
+                                <hr>
+                                <h2>Добавить комментарий</h2>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    {{ comment_form.as_p }}
+                                    <p></p>
+                                    <input type="submit" value="Отправить"/>
+                                </form>
+                            {% else %}
+                                <h3>Чтобы оставить коментарий войдите или зарегистрируйтесь</h3>
+                            {% endif %}
+                            <hr>
+                            <h2>Коментарии</h2>
+                            <p></p>
+                            {% for comment in comments %}
+                                <p>Автор: {{ comment.author.first_name}} {{ comment.author.last_name}}
+                                   Создан: {{ comment.created }}</p>
+                                <p>{{ comment.text }}</p>
+                            {% empty %}
+                                <h3>Комментариев пока нет</h3>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container p-3" style="background-color: #e9f7fa">
+                <div class="row">
+                    {% block footer %}
+                        {% include 'include/footer.html' %}
+                    {% endblock footer %}
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+</body>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ru-RU">
+<section>
+    <div class="container p-3" style="background-color: #d9e4dc">
+            {% block header %}
+                {% include 'include/header.html' %}
+            {% endblock header %}
+    </div>
+</section>
+<body>
+<section>
+    <div class="container pt-3 pb-3" style="background-color: #d9e4dc">
+        <section>
+            <div class="container pt-3 pb-3" style="background-color: #e9f7fa">
+                <div class="carousel-3d" data-gap="20">
+                    <figure>
+                        <div><a href="/weather/"><img class="img-fluid rounded" src="{% static 'img/1.jpg' %}" alt=""/></a></div>
+                        <div><a href="/news/"><img class="img-fluid rounded" src="{% static 'img/news.jpg' %}" alt=""/></a></div>
+                        <div><a href="#any"><img class="img-fluid rounded" src="{% static 'img/authorization.jpg' %}" alt=""/></a></div>
+                        <div><a href="#any"><img class="img-fluid rounded" src="{% static 'img/registration.jpg' %}" alt=""/></a></div>
+                        <div><a href="#any"><img class="img-fluid rounded" src="{% static 'img/complaint.jpg' %}" alt=""/></a></div>
+                        <div><a href="#any"><img class="img-fluid rounded" src="{% static 'img/log.png' %}" alt=""/></a></div>
+                    </figure>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <nav>
+                        <button class="nav prev">Назад</button>
+                        <button class="nav next">Вперед</button>
+                    </nav>
+                </div>
+            </div>
+        </section>
+            <div class="container p-3" style="background-color: #d9e4dc">
+                <div class="row">
+                    {% block footer %}
+                        {% include 'include/footer.html' %}
+                    {% endblock footer %}
+                </div>
+            </div>
+    </div>
+</section>
+</body>
+</html>
